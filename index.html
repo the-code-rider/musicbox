@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Music Box</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+  .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: #fff;
+  padding: 0 0px;
+}
+
+.nav-item {
+  padding: 20px 10px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-item.active {
+  background-color: #555;
+}
+
+.social-icons a {
+  color: #fff;
+  padding: 0 10px;
+  text-decoration: none;
+}
+
+.fab {
+  font-size: 20px;
+}
+  .iframe-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding-top: 0px; /* Adjust based on nav bar height */
+  }
+  iframe {
+    width: 100vw;
+    height: 100vh; /* Adjust based on nav bar height */
+    border: none;
+  }
+  audio {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 25px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 300px;
+    color: white;
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="#" class="nav-item" onclick="changeSkybox('https://skybox.blockadelabs.com/e/c23e45907779ebf54d99a1d75d1060eb', 'assets/beach.mp3')">A Day At The Beach</a>
+  <a href="#" class="nav-item" onclick="changeSkybox('Skybox2URL', 'Audio2URL')">Skybox 2</a>
+  <!-- Add more skybox and audio pairs as needed -->
+   <div class="social-icons">
+    <a href="https://github.com/yourusername" target="_blank"><i class="fab fa-github"></i></a>
+    <a href="https://twitter.com/yourusername" target="_blank"><i class="fab fa-twitter"></i></a>
+  </div>
+</nav>
+
+<div class="iframe-container">
+  <iframe id="skyboxIframe" src="https://skybox.blockadelabs.com/e/c23e45907779ebf54d99a1d75d1060eb"></iframe>
+</div>
+
+<audio id="backgroundAudio" loop controls>
+  <source src="assets/beach.mp3" type="audio/mp3">
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+  function changeSkybox(skyboxURL, audioURL) {
+    document.getElementById('skyboxIframe').src = skyboxURL;
+    const audioElement = document.getElementById('backgroundAudio');
+    const sourceElement = audioElement.querySelector('source');
+    sourceElement.src = audioURL;
+    audioElement.load(); // Load the new source
+    audioElement.play().catch(e => console.error("Autoplay was prevented", e));
+  }
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    // Remove active class from all items and add to the clicked one
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+</script>
+
+</body>
+</html>
